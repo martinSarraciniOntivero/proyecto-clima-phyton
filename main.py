@@ -53,12 +53,12 @@ def mostrar_clima(datosClima):
     emoji = obtener_emoji(climaIngles)
 
     print("==============================")
-    print(f"🌤️ Ciudad:       {datosClima['name']}")
+    print(f"🌤️ Ciudad:       {ciudad}")
     print(f"🌡️ Temperatura:  {datosClima['main']['temp']} °C")
     print(f"💧 Humedad:      {datosClima['main']['humidity']} %")
     print(f"{emoji} Estado:       {climaEspañol}")
     print("==============================")
-
+    
 datosClima = obtener_clima(ciudad)
 
 if datosClima:
