@@ -9,8 +9,11 @@ def obtener_clima(ciudad):
 
     respuesta = requests.get(url)
     datos = respuesta.json()
+    if respuesta.status_code != 200:
+        print("ciudad no encontrada")
+        return None 
     return datos
-datosClima = obtener_clima(ciudad)
+
 
 def traducir_clima(clima):
     traducciones = {
@@ -27,14 +30,36 @@ def traducir_clima(clima):
     }
     return traducciones.get(clima, clima)
 
+def obtener_emoji(clima):
+    emojis = {
+        "clear sky": "☀️",
+        "few clouds": "🌤️",
+        "scattered clouds": "☁️",
+        "broken clouds": "☁️",
+        "overcast clouds": "☁️",
+        "rain": "🌧️",
+        "shower rain": "🌦️",
+        "thunderstorm": "⛈️",
+        "snow": "❄️",
+        "mist": "🌫️"
+    }
+    return emojis.get(clima,  "🌍")
 
 def mostrar_clima(datosClima):
     climaIngles = datosClima["weather"][0]["description"]
+
     climaEspañol = traducir_clima(climaIngles)
 
-    print("ciudad:", datosClima["name"])
-    print("temperatura:", datosClima["main"]["temp"], "°C")
-    print("humedad:", datosClima["main"]["humidity"], "%")
-    print("descripción:", climaEspañol)
+    emoji = obtener_emoji(climaIngles)
 
-mostrar_clima(datosClima)
+    print("==============================")
+    print(f"🌤️ Ciudad:       {datosClima['name']}")
+    print(f"🌡️ Temperatura:  {datosClima['main']['temp']} °C")
+    print(f"💧 Humedad:      {datosClima['main']['humidity']} %")
+    print(f"{emoji} Estado:       {climaEspañol}")
+    print("==============================")
+
+datosClima = obtener_clima(ciudad)
+
+if datosClima:
+    mostrar_clima(datosClima)
