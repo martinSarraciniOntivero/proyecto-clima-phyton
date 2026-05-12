@@ -1,6 +1,6 @@
 import requests
 
-ciudad = input("Ingresá una ciudad: ")
+ciudad = input("🌍 Ingresá una ciudad: ")
 
 
 def obtener_clima(ciudad):
@@ -30,7 +30,7 @@ def traducir_clima(clima):
     }
     return traducciones.get(clima, clima)
 
-def obtener_emoji(clima):
+def obtener_emoji_clima(clima):
     emojis = {
         "clear sky": "☀️",
         "few clouds": "🌤️",
@@ -45,18 +45,39 @@ def obtener_emoji(clima):
     }
     return emojis.get(clima,  "🌍")
 
+def obtener_emoji_sensacion(sensacionTermica):
+    
+    emoji = "🌡️"
+    if sensacionTermica >= 30:
+        emoji = "🥵"
+
+    elif sensacionTermica >= 20:
+        emoji = "😎"
+
+    elif sensacionTermica >= 10:
+        emoji = "🙂"
+
+    else:
+        emoji = "🥶"
+    return emoji
+
 def mostrar_clima(datosClima):
     climaIngles = datosClima["weather"][0]["description"]
 
     climaEspañol = traducir_clima(climaIngles)
-
-    emoji = obtener_emoji(climaIngles)
+    sensacion = datosClima['main']['feels_like']
+    emojiClima = obtener_emoji_clima(climaIngles)
+    emojiSensacion = obtener_emoji_sensacion(sensacion)
 
     print("==============================")
-    print(f"🌤️ Ciudad:       {ciudad}")
-    print(f"🌡️ Temperatura:  {datosClima['main']['temp']} °C")
-    print(f"💧 Humedad:      {datosClima['main']['humidity']} %")
-    print(f"{emoji} Estado:       {climaEspañol}")
+    print(f"🌍 Ciudad:       {ciudad}")
+    print(f"🌡️ Temperatura:         {datosClima['main']['temp']: .1f} °C")
+    print(f"{emojiSensacion} Sensación térmica: {sensacion: .1f} °C")
+    print(f"🔺 Máxima:              {datosClima['main']['temp_max']: .1f} °C")
+    print(f"🔻 Mínima:              {datosClima['main']['temp_min']: .1f} °C")
+    print(f"💨 Viento:              {datosClima['wind']['speed']: .1f} m/s")
+    print(f"💧 Humedad:             {datosClima['main']['humidity']} %")
+    print(f"{emojiClima} Estado:            {climaEspañol}")
     print("==============================")
     
 datosClima = obtener_clima(ciudad)
