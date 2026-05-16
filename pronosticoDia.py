@@ -13,7 +13,9 @@ def obtener_clima_dia(ciudad):
     respuesta = requests.get(url)
 
     datos = respuesta.json()
-
+    if respuesta.status_code != 200:
+        print("❌ Ciudad no encontrada")
+        return None
     return(datos)
 
 def mostrar_clima_dia(datos, ciudad):

@@ -13,7 +13,7 @@ def obtener_clima(ciudad):
     respuesta = requests.get(url)
     datos = respuesta.json()
     if respuesta.status_code != 200:
-        print("ciudad no encontrada")
+        print("❌ Ciudad no encontrada")
         return None 
     return datos
 
