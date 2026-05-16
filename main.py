@@ -1,6 +1,8 @@
 
 from pronosticoActual import obtener_clima
 from pronosticoActual import mostrar_clima
+from pronosticoDia import obtener_clima_dia
+from pronosticoDia import mostrar_clima_dia
 
 print("================================")
 print("🌤️ Hola! ¿Qué pronóstico buscás?")

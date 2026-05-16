@@ -6,7 +6,7 @@ import requests
 
 def obtener_clima_dia(ciudad):
 
-    api_key = "TU_API_KEY"
+    api_key = "8b279de45d4431474c0678b930456ef0"
 
     url = f"https://api.openweathermap.org/data/2.5/forecast?q={ciudad}&appid={api_key}&units=metric"
 
@@ -14,4 +14,18 @@ def obtener_clima_dia(ciudad):
 
     datos = respuesta.json()
 
-    print(datos)
+    return(datos)
+
+def mostrar_clima_dia(datos, ciudad):
+    for pronostico in datos["list"][:8]:
+        horaCompleta = pronostico["dt_txt"]
+        hora = horaCompleta.split(" ")[1]
+        hora = hora[:5]
+        temperatura = pronostico["main"]["temp"]
+        climaIngles = pronostico["weather"][0]["description"]
+        climaEspañol = traducir_clima(climaIngles)
+        emojiClima = obtener_emoji_clima(climaIngles)
+        print("==============================")
+        print(f"Horario UTC: {hora}")
+        print(f"Temperatura: {temperatura}°C")
+        print(f"Clima: {climaEspañol} {emojiClima}")
